@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - THE VICTOR BIKES</title>
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="login-page">
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">VB</div>
+        <div class="logo-text">
+          <h1>THE VICTOR BIKES</h1>
+          <span>Administrator Access</span>
+        </div>
+      </a>
+      
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i> Back to Store
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Login Container -->
+  <main class="login-main">
+    <div class="login-container admin-login">
+      <!-- Login Header -->
+      <div class="login-header admin-header">
+        <div class="logo">
+          <div class="logo-icon">VB</div>
+          <div>
+            <h2>Victor Bikes Admin</h2>
+            <p>Restricted Access - Authorized Personnel Only</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Notice -->
+      <div class="security-notice">
+        <i class="fas fa-shield-alt"></i>
+        <p>This area is restricted to authorized administrators only. Unauthorized access is prohibited.</p>
+      </div>
+
+      <!-- Login Form -->
+      <div class="login-form">
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label for="adminUsername" class="form-label">Admin Username</label>
+            <div class="input-with-icon">
+              <i class="fas fa-user-shield"></i>
+              <input type="text" id="adminUsername" class="form-input" placeholder="Enter username" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="adminPassword" class="form-label">Password</label>
+            <div class="input-with-icon">
+              <i class="fas fa-lock"></i>
+              <input type="password" id="adminPassword" class="form-input" placeholder="Enter password" required>
+              <button type="button" class="toggle-password" data-target="adminPassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <input type="checkbox" id="rememberSession">
+              Remember this session
+            </label>
+          </div>
+
+          <div class="form-footer">
+            <button type="submit" class="btn btn-primary btn-block">
+              <i class="fas fa-sign-in-alt"></i> Login to Admin Panel
+            </button>
+          </div>
+        </form>
+
+        <div class="form-links">
+          <p>
+            <a href="index.html">
+              <i class="fas fa-store"></i> Back to Store
+            </a>
+          </p>
+          <p class="contact-admin">
+            Need access? Contact Victor Ejike: 0806 246 3468
+          </p>
+        </div>
+      </div>
+
+      <!-- System Info -->
+      <div class="system-info">
+        <h4>System Information</h4>
+        <div class="info-item">
+          <i class="fas fa-server"></i>
+          <span>Store Version: 2.1.0</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-database"></i>
+          <span>Last Backup: <span id="backupTime">Today 10:30</span></span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-users"></i>
+          <span>Total Users: <span id="totalUsersCount">0</span></span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2024 THE VICTOR BIKES. All rights reserved.</p>
+        <p><strong>CEO:</strong> Victor Ejike | <strong>Phone:</strong> 0806 246 3468</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/utils.js"></script>
+  <script>
+    // Admin Login Script
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('adminLoginForm');
+      const togglePassword = document.querySelector('.toggle-password');
+      
+      // Toggle password visibility
+      if (togglePassword) {
+        togglePassword.addEventListener('click', function() {
+          const targetId = this.dataset.target;
+          const input = document.getElementById(targetId);
+          const icon = this.querySelector('i');
+          
+          if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+          } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+          }
+        });
+      }
+      
+      // Handle login
+      if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const username = document.getElementById('adminUsername').value;
+          const password = document.getElementById('adminPassword').value;
+          
+          // Default admin credentials
+          const adminCredentials = [
+            { username: 'victor', password: 'admin123', name: 'Victor Ejike', role: 'CEO' },
+            { username: 'admin', password: 'victorbikes2024', name: 'Administrator', role: 'Admin' }
+          ];
+          
+          const validAdmin = adminCredentials.find(admin => 
+            admin.username === username && admin.password === password
+          );
+          
+          if (validAdmin) {
+            // Save admin session
+            const adminData = {
+              id: 'admin_' + Date.now(),
+              username: validAdmin.username,
+              name: validAdmin.name,
+              role: validAdmin.role,
+              loginTime: new Date().toISOString()
+            };
+            
+            localStorage.setItem('victorBikes_admin', JSON.stringify(adminData));
+            
+            // Redirect to admin dashboard
+            window.location.href = 'admin.html';
+          } else {
+            // Show error
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = 'Invalid admin credentials';
+            
+            const existingError = loginForm.querySelector('.error-message');
+            if (existingError) {
+              existingError.remove();
+            }
+            
+            loginForm.appendChild(errorDiv);
+            
+            // Shake animation
+            loginForm.classList.add('shake');
+            setTimeout(() => loginForm.classList.remove('shake'), 500);
+          }
+        });
+      }
+      
+      // Load system info
+      loadSystemInfo();
+    });
+    
+    function loadSystemInfo() {
+      const users = JSON.parse(localStorage.getItem('victorBikes_users') || '[]');
+      document.getElementById('totalUsersCount').textContent = users.length;
+      
+      const backups = JSON.parse(localStorage.getItem('victorBikes_backups') || '[]');
+      if (backups.length > 0) {
+        const lastBackup = new Date(backups[backups.length - 1].timestamp);
+        document.getElementById('backupTime').textContent = 
+          lastBackup.toLocaleDateString() + ' ' + lastBackup.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      }
+    }
+    
+    // Add shake animation CSS
+    const style = document.createElement('style');
+    style.textContent = `
+      .shake {
+        animation: shake 0.5s;
+      }
+      
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+      }
+      
+      .admin-login .login-header {
+        background: linear-gradient(90deg, #0b1a2d, #08303b);
+        border-bottom: 3px solid #10b981;
+      }
+      
+      .admin-header h2 {
+        color: #10b981;
+      }
+      
+      .security-notice {
+        background: rgba(245, 158, 11, 0.1);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      
+      .security-notice i {
+        color: #f59e0b;
+        font-size: 1.5rem;
+      }
+      
+      .security-notice p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #f59e0b;
+      }
+      
+      .contact-admin {
+        text-align: center;
+        font-weight: 600;
+        color: #10b981;
+        margin-top: 1rem;
+      }
+      
+      .system-info {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+      }
+      
+      .system-info h4 {
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        color: #94a3b8;
+      }
+      
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+        font-size: 0.9rem;
+      }
+      
+      .info-item i {
+        color: #10b981;
+        width: 16px;
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

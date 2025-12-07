@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#10b981">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/mobile-optimizations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="css/style.css" as="style">
+    <link rel="preload" href="js/utils.js" as="script">
+    
+    <!-- Favicon for all devices -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="manifest" href="assets/site.webmanifest">
+    
+    <!-- iOS specific -->
+    <meta name="apple-mobile-web-app-title" content="Victor Bikes">
+    <meta name="format-detection" content="telephone=no">
+  </head>
+  <title>THE VICTOR BIKES — Online Store</title>
+  <meta name="description" content="Nigeria's premier bicycle store: bikes, repairs, parts, and electric vehicles. Located in Abuja." />
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">VB</div>
+        <div class="logo-text">
+          <h1>THE VICTOR BIKES</h1>
+          <span>Bicycle Store in Nigeria</span>
+        </div>
+      </a>
+      
+     <!-- Navigation Menu in all pages -->
+<!-- Add this to your existing navigation in all pages -->
+<div class="nav-menu" id="navMenu">
+  <!-- Existing links -->
+  <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+  <a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> About</a>
+  <a href="services" class="nav-link"><i class="fas fa-tools"></i> Services</a>
+  <a href="contact.html" class="nav-link"><i class="fas fa-phone"></i> Contact</a>
+  <a href="login.html" class="nav-link"><i class="fas fa-user"></i> Account</a>
+  <!-- Add Admin link (only show for logged-in admin) -->
+  <a href="admin-login.html" class="nav-link admin-link">
+    <i class="fas fa-user-shield"></i> Admin
+  </a>
+</div>
+      
+      <div class="nav-actions">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search products...">
+        </div>
+        
+        <div class="user-actions">
+          <a href="login.html" class="user-btn" id="loginBtn">
+            <i class="fas fa-user"></i>
+            <span id="userStatus">Login</span>
+          </a>
+          
+          <div class="cart-btn" id="cartBtn">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+          </div>
+        </div>
+        
+        <button class="menu-toggle" id="menuToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Business Banner -->
+  <div class="business-banner">
+    <div class="container">
+      <div class="banner-content">
+        <div class="banner-info">
+          <div class="info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Palm City St, Abuja 900108, FCT</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <span>0806 246 3468</span>
+          </div>
+        </div>
+        <div class="banner-right">
+          <div class="rating-badge">
+            <i class="fas fa-star"></i>
+            <span>4.3</span>
+            <small>Google Reviews</small>
+          </div>
+          <div class="hours-badge">
+            <i class="fas fa-clock"></i>
+            <span>Open 8am-6pm</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <h2>Quality Bikes & Expert Repairs</h2>
+        <p>We specialize in all kinds of bike fixing, selling, and buying. Electric bicycles, scooters, and more.</p>
+        <div class="hero-buttons">
+          <a href="#products" class="btn btn-primary">Shop Now</a>
+          <a href="#services" class="btn btn-secondary">Book Service</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?auto=format&fit=crop&w=800&q=80" alt="Premium Bicycle">
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products-section">
+      <div class="section-header">
+        <h2>Featured Products</h2>
+        <p>Browse our collection of bikes, parts, and accessories</p>
+      </div>
+      
+      <div class="category-filters" id="categoryFilters">
+        <!-- Filters will be loaded by JS -->
+      </div>
+      
+      <div class="products-grid" id="productsGrid">
+        <!-- Products will be loaded by JS -->
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+      <div class="section-header">
+        <h2>Our Services</h2>
+        <p>Professional bike services and repairs</p>
+      </div>
+      
+      <div class="services-grid" id="servicesGrid">
+        <!-- Services will be loaded by JS -->
+      </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
+        <button class="close-cart" id="closeCart">&times;</button>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <!-- Cart items will be loaded by JS -->
+      </div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Total:</span>
+          <span id="cartTotal">₦0</span>
+        </div>
+        <button class="btn btn-primary btn-block" id="checkoutBtn">Proceed to Checkout</button>
+        <button class="btn btn-secondary btn-block" id="clearCartBtn">Clear Cart</button>
+      </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>THE VICTOR BIKES</h4>
+          <p>Specializing in all kinds of bike fixing, selling and buying bikes, scooters, electric bicycles, electric cars, etc.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="login.html">My Account</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Contact Info</h4>
+          <ul class="contact-info">
+            <li><i class="fas fa-map-marker-alt"></i> Palm City St, Abuja 900108</li>
+            <li><i class="fas fa-phone"></i> 0806 246 3468</li>
+            <li><i class="fas fa-envelope"></i> info@victorbikes.com</li>
+            <li><i class="fas fa-clock"></i> Mon-Sat: 8am-6pm</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 THE VICTOR BIKES. All rights reserved.</p>
+      
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript Files -->
+  <script src="js/utils.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- JavaScript Files -->
+<script src="js/utils.js"></script>
+<script src="js/device-detection.js"></script>
+<script src="js/mobile-nav.js"></script>
+<!-- Existing JS files -->
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+
+<!-- Initialize with device detection -->
+<script>
+  // Wait for DOM to load
+  document.addEventListener('DOMContentLoaded', function() {
+    // Apply device-specific classes
+    const deviceType = deviceOptimizer.getDeviceType();
+    document.body.classList.add(`device-${deviceType}`);
+    
+    // Set initial viewport height
+    const setAppHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+    setAppHeight();
+    window.addEventListener('resize', setAppHeight);
+    
+    // Initialize mobile navigation if on mobile
+    if (deviceType === 'mobile') {
+      // Add mobile search button
+      const searchBtn = document.createElement('button');
+      searchBtn.className = 'btn btn-icon mobile-search-btn';
+      searchBtn.innerHTML = '<i class="fas fa-search"></i>';
+      searchBtn.addEventListener('click', () => mobileNav.openSearch());
+      
+      const navActions = document.querySelector('.nav-actions');
+      if (navActions) {
+        navActions.insertBefore(searchBtn, navActions.firstChild);
+      }
+      
+      // Add scroll to top button
+      const scrollTopBtn = document.createElement('button');
+      scrollTopBtn.className = 'scroll-top-btn';
+      scrollTopBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+      scrollTopBtn.addEventListener('click', () => mobileNav.scrollToTop());
+      document.body.appendChild(scrollTopBtn);
+      
+      // Show/hide scroll button
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+          scrollTopBtn.classList.add('visible');
+        } else {
+          scrollTopBtn.classList.remove('visible');
+        }
+      });
+    }
+    
+    // Handle offline/online status
+    window.addEventListener('online', () => {
+      document.body.classList.remove('offline');
+      utils.showToast('You are back online', 'success');
+    });
+    
+    window.addEventListener('offline', () => {
+      document.body.classList.add('offline');
+      utils.showToast('You are offline. Some features may not work.', 'warning');
+    });
+  });
+</script>
+
+<!-- Add inline styles for critical mobile optimizations -->
+<style>
+  /* Critical mobile optimizations */
+  @media (max-width: 767px) {
+    .scroll-top-btn {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: var(--shadow-lg);
+      z-index: 999;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+    
+    .scroll-top-btn.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .mobile-search-btn {
+      display: flex !important;
+    }
+    
+    .ripple-effect {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      pointer-events: none;
+    }
+    
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  }
+  
+  /* Print styles */
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - THE VICTOR BIKES</title>
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js for Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Admin Navigation -->
+  <nav class="admin-nav">
+    <div class="nav-container">
+      <div class="admin-brand">
+        <div class="logo-icon">VB</div>
+        <div class="logo-text">
+          <h1>VICTOR BIKES ADMIN</h1>
+          <span>Control Panel</span>
+        </div>
+      </div>
+      
+      <div class="admin-user">
+        <div class="user-info">
+          <span class="user-name">Victor Ejike</span>
+          <span class="user-role">Administrator</span>
+        </div>
+        <button class="logout-btn" id="adminLogout">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Admin Sidebar -->
+  <div class="admin-container">
+    <aside class="admin-sidebar">
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="nav-item active" data-section="dashboard">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+        
+        <a href="#products" class="nav-item" data-section="products">
+          <i class="fas fa-bicycle"></i>
+          <span>Products</span>
+          <span class="badge" id="productsCount">0</span>
+        </a>
+        
+        <a href="#orders" class="nav-item" data-section="orders">
+          <i class="fas fa-shopping-cart"></i>
+          <span>Orders</span>
+          <span class="badge" id="ordersCount">0</span>
+        </a>
+        
+        <a href="#users" class="nav-item" data-section="users">
+          <i class="fas fa-users"></i>
+          <span>Users</span>
+          <span class="badge" id="usersCount">0</span>
+        </a>
+        
+        <a href="#messages" class="nav-item" data-section="messages">
+          <i class="fas fa-envelope"></i>
+          <span>Messages</span>
+          <span class="badge" id="messagesCount">0</span>
+        </a>
+        
+        <a href="#payments" class="nav-item" data-section="payments">
+          <i class="fas fa-credit-card"></i>
+          <span>Payments</span>
+          <span class="badge" id="paymentsCount">0</span>
+        </a>
+        
+        <a href="#services" class="nav-item" data-section="services">
+          <i class="fas fa-tools"></i>
+          <span>Services</span>
+          <span class="badge" id="servicesCount">0</span>
+        </a>
+        
+        <a href="#analytics" class="nav-item" data-section="analytics">
+          <i class="fas fa-chart-line"></i>
+          <span>Analytics</span>
+        </a>
+        
+        <a href="#settings" class="nav-item" data-section="settings">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+        
+        <a href="index.html" class="nav-item store-link">
+          <i class="fas fa-store"></i>
+          <span>Visit Store</span>
+        </a>
+      </nav>
+      
+      <div class="system-status">
+        <h4>System Status</h4>
+        <div class="status-item">
+          <span>Store Status:</span>
+          <span class="status online">Online</span>
+        </div>
+        <div class="status-item">
+          <span>Last Backup:</span>
+          <span class="status" id="lastBackup">Today 10:30</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-content">
+      <!-- Dashboard Section -->
+      <section id="dashboard" class="admin-section active">
+        <div class="section-header">
+          <h2><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h2>
+          <div class="header-actions">
+            <button class="btn btn-primary" onclick="admin.exportData()">
+              <i class="fas fa-download"></i> Export Data
+            </button>
+            <button class="btn btn-secondary" onclick="admin.refreshDashboard()">
+              <i class="fas fa-sync"></i> Refresh
+            </button>
+          </div>
+        </div>
+        
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon revenue">
+              <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="totalRevenue">₦0</h3>
+              <p>Total Revenue</p>
+            </div>
+            <div class="stat-trend up">
+              <i class="fas fa-arrow-up"></i> 12%
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon orders">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="totalOrders">0</h3>
+              <p>Total Orders</p>
+            </div>
+            <div class="stat-trend up">
+              <i class="fas fa-arrow-up"></i> 8%
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon users">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="totalUsers">0</h3>
+              <p>Registered Users</p>
+            </div>
+            <div class="stat-trend up">
+              <i class="fas fa-arrow-up"></i> 15%
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon products">
+              <i class="fas fa-bicycle"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="totalProducts">0</h3>
+              <p>Products</p>
+            </div>
+            <div class="stat-trend down">
+              <i class="fas fa-arrow-down"></i> 2%
+            </div>
+          </div>
+        </div>
+        
+        <!-- Charts -->
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3>Revenue Overview</h3>
+            <canvas id="revenueChart" height="250"></canvas>
+          </div>
+          
+          <div class="chart-card">
+            <h3>Order Statistics</h3>
+            <canvas id="ordersChart" height="250"></canvas>
+          </div>
+        </div>
+        
+        <!-- Recent Activities -->
+        <div class="activities-card">
+          <div class="card-header">
+            <h3>Recent Activities</h3>
+            <button class="btn btn-secondary" onclick="admin.viewAllActivities()">
+              View All
+            </button>
+          </div>
+          <div class="activities-list" id="activitiesList">
+            <!-- Activities will be loaded here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Products Section -->
+      <section id="products" class="admin-section">
+        <div class="section-header">
+          <h2><i class="fas fa-bicycle"></i> Product Management</h2>
+          <div class="header-actions">
+            <button class="btn btn-primary" onclick="admin.showAddProductModal()">
+              <i class="fas fa-plus"></i> Add Product
+            </button>
+            <button class="btn btn-secondary" onclick="admin.exportProducts()">
+              <i class="fas fa-file-export"></i> Export
+            </button>
+          </div>
+        </div>
+        
+        <!-- Product Filters -->
+        <div class="filters-bar">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="productSearch" placeholder="Search products...">
+          </div>
+          <select id="categoryFilter" class="filter-select">
+            <option value="">All Categories</option>
+            <option value="bikes">Bikes</option>
+            <option value="electric">Electric Vehicles</option>
+            <option value="parts">Parts</option>
+            <option value="accessories">Accessories</option>
+            <option value="services">Services</option>
+          </select>
+          <select id="stockFilter" class="filter-select">
+            <option value="">All Stock Status</option>
+            <option value="in_stock">In Stock</option>
+            <option value="low_stock">Low Stock</option>
+            <option value="out_of_stock">Out of Stock</option>
+          </select>
+        </div>
+        
+        <!-- Products Table -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="selectAllProducts"></th>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productsTable">
+              <!-- Products will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Table Actions -->
+        <div class="table-actions">
+          <button class="btn btn-danger" onclick="admin.deleteSelectedProducts()">
+            <i class="fas fa-trash"></i> Delete Selected
+          </button>
+          <div class="pagination">
+            <button class="page-btn" onclick="admin.prevPage()">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <span class="page-info">Page <span id="currentPage">1</span> of <span id="totalPages">1</span></span>
+            <button class="page-btn" onclick="admin.nextPage()">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Orders Section -->
+      <section id="orders" class="admin-section">
+        <div class="section-header">
+          <h2><i class="fas fa-shopping-cart"></i> Order Management</h2>
+          <div class="header-actions">
+            <button class="btn btn-secondary" onclick="admin.exportOrders()">
+              <i class="fas fa-file-export"></i> Export Orders
+            </button>
+          </div>
+        </div>
+        
+        <!-- Order Stats -->
+        <div class="order-stats">
+          <div class="order-stat pending">
+            <h4 id="pendingOrders">0</h4>
+            <p>Pending</p>
+          </div>
+          <div class="order-stat processing">
+            <h4 id="processingOrders">0</h4>
+            <p>Processing</p>
+          </div>
+          <div class="order-stat completed">
+            <h4 id="completedOrders">0</h4>
+            <p>Completed</p>
+          </div>
+          <div class="order-stat cancelled">
+            <h4 id="cancelledOrders">0</h4>
+            <p>Cancelled</p>
+          </div>
+        </div>
+        
+        <!-- Orders Table -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Payment</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTable">
+              <!-- Orders will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Users Section -->
+      <section id="users" class="admin-section">
+        <div class="section-header">
+          <h2><i class="fas fa-users"></i> User Management</h2>
+          <div class="header-actions">
+            <button class="btn btn-secondary" onclick="admin.exportUsers()">
+              <i class="fas fa-file-export"></i> Export Users
+            </button>
+          </div>
+        </div>
+        
+        <!-- Users Table -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Joined</th>
+                <th>Orders</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTable">
+              <!-- Users will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Messages Section -->
+      <section id="messages" class="admin-section">
+        <div class="section-header">
+          <h2><i class="fas fa-envelope"></i> Customer Messages</h2>
+          <div class="header-actions">
+            <button class="btn btn-primary" onclick="admin.markAllAsRead()">
+              <i class="fas fa-check-double"></i> Mark All as Read
+            </button>
+          </div>
+        </div>
+        
+        <!-- Messages List -->
+        <div class="messages-container">
+          <div class="messages-sidebar">
+            <div class="message-filters">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="unread">Unread</button>
+              <button class="filter-btn" data-filter="read">Read</button>
+              <button class="filter-btn" data-filter="urgent">Urgent</button>
+            </div>
+            <div class="messages-list" id="messagesList">
+              <!-- Messages will be loaded here -->
+            </div>
+          </div>
+          <div class="message-viewer" id="messageViewer">
+            <div class="no-message-selected">
+              <i class="fas fa-envelope-open"></i>
+              <h3>Select a message to view</h3>
+              <p>Click on any message from the list to read and respond</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Payments Section -->
+      <section id="payments" class="admin-section">
+        <div class="section-header">
+          <h2><i class="fas fa-credit-card"></i> Payment Management</h2>
+          <div class="header-actions">
+            <button class="btn btn-primary" onclick="admin.syncPayments()">
+              <i class="fas fa-sync"></i> Sync Payments
+            </button>
+            <button class="btn btn-secondary" onclick="admin.exportPayments()">
+              <i class="fas fa-file-export"></i> Export
+            </button>
+          </div>
+        </div>
+        
+        <!-- Payment Stats -->
+        <div class="payment-stats">
+          <div class="payment-stat">
+            <h4 id="totalPayments">₦0</h4>
+            <p>Total Payments</p>
+          </div>
+          <div class="payment-stat">
+            <h4 id="successfulPayments">0</h4>
+            <p>Successful</p>
+          </div>
+          <div class="payment-stat">
+            <h4 id="pendingPayments">0</h4>
+            <p>Pending</p>
+          </div>
+          <div class="payment-stat">
+            <h4 id="failedPayments">0</h4>
+            <p>Failed</p>
+          </div>
+        </div>
+        
+        <!-- Bank Account Info -->
+        <div class="bank-info-card">
+          <h3><i class="fas fa-university"></i> Bank Account Information</h3>
+          <div class="bank-details">
+            <div class="bank-detail">
+              <span class="label">Account Name:</span>
+              <span class="value">Victor Ejike</span>
+            </div>
+            <div class="bank-detail">
+              <span class="label">Account Number:</span>
+              <span class="value">8062463468</span>
+              <button class="copy-btn" onclick="admin.copyText('8062463468')">
+                <i class="fas fa-copy"></i>
+              </button>
+            </div>
+            <div class="bank-detail">
+              <span class="label">Bank Name:</span>
+              <span class="value">Opay</span>
+            </div>
+            <div class="bank-detail">
+              <span class="label">Account Type:</span>
+              <span class="value">Current Account</span>
+            </div>
+          </div>
+          <div class="bank-actions">
+            <button class="btn btn-primary" onclick="admin.generatePaymentLink()">
+              <i class="fas fa-link"></i> Generate Payment Link
+            </button>
+            <button class="btn btn-secondary" onclick="admin.viewBankStatement()">
+              <i class="fas fa-file-invoice"></i> View Statement
+            </button>
+          </div>
+        </div>
+        
+        <!-- Payments Table -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Payment ID</th>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Reference</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="paymentsTable">
+              <!-- Payments will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Services Section -->
+      <section id="services" class="admin-section">
+        <div class="section-header">
+          <h2><i class="fas fa-tools"></i> Service Bookings</h2>
+          <div class="header-actions">
+            <button class="btn btn-primary" onclick="admin.addService()">
+              <i class="fas fa-plus"></i> Add Service
+            </button>
+          </div>
+        </div>
+        
+        <!-- Services Table -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Customer</th>
+                <th>Service</th>
+                <th>Date & Time</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="servicesTable">
+              <!-- Services will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Analytics Section -->
+      <section id="analytics" class="admin-section">
+        <div class="section-header">
+          <h2><i class="fas fa-chart-line"></i> Analytics & Reports</h2>
+          <div class="header-actions">
+            <select id="analyticsPeriod" class="filter-select" onchange="admin.updateAnalytics()">
+              <option value="7">Last 7 days</option>
+              <option value="30" selected>Last 30 days</option>
+              <option value="90">Last 90 days</option>
+              <option value="365">Last year</option>
+            </select>
+            <button class="btn btn-primary" onclick="admin.generateReport()">
+              <i class="fas fa-file-pdf"></i> Generate Report
+            </button>
+          </div>
+        </div>
+        
+        <!-- Analytics Charts -->
+        <div class="analytics-grid">
+          <div class="analytics-chart">
+            <h3>Sales Performance</h3>
+            <canvas id="salesChart" height="300"></canvas>
+          </div>
+          <div class="analytics-chart">
+            <h3>Top Products</h3>
+            <canvas id="topProductsChart" height="300"></canvas>
+          </div>
+          <div class="analytics-chart">
+            <h3>Customer Acquisition</h3>
+            <canvas id="customersChart" height="300"></canvas>
+          </div>
+          <div class="analytics-chart">
+            <h3>Payment Methods</h3>
+            <canvas id="paymentMethodsChart" height="300"></canvas>
+          </div>
+        </div>
+        
+        <!-- Key Metrics -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h4>Average Order Value</h4>
+            <h2 id="avgOrderValue">₦0</h2>
+            <div class="metric-trend up">+5% from last period</div>
+          </div>
+          <div class="metric-card">
+            <h4>Conversion Rate</h4>
+            <h2 id="conversionRate">0%</h2>
+            <div class="metric-trend up">+2% from last period</div>
+          </div>
+          <div class="metric-card">
+            <h4>Customer Lifetime Value</h4>
+            <h2 id="clv">₦0</h2>
+            <div class="metric-trend up">+8% from last period</div>
+          </div>
+          <div class="metric-card">
+            <h4>Repeat Purchase Rate</h4>
+            <h2 id="repeatRate">0%</h2>
+            <div class="metric-trend down">-1% from last period</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Section -->
+      <section id="settings" class="admin-section">
+        <div class="section-header">
+          <h2><i class="fas fa-cog"></i> System Settings</h2>
+          <div class="header-actions">
+            <button class="btn btn-primary" onclick="admin.saveSettings()">
+              <i class="fas fa-save"></i> Save Settings
+            </button>
+          </div>
+        </div>
+        
+        <!-- Settings Tabs -->
+        <div class="settings-tabs">
+          <button class="tab-btn active" data-tab="general">General</button>
+          <button class="tab-btn" data-tab="payment">Payment</button>
+          <button class="tab-btn" data-tab="email">Email</button>
+          <button class="tab-btn" data-tab="security">Security</button>
+          <button class="tab-btn" data-tab="backup">Backup</button>
+        </div>
+        
+        <!-- General Settings -->
+        <div id="general" class="settings-tab active">
+          <div class="settings-form">
+            <div class="form-group">
+              <label for="storeName">Store Name</label>
+              <input type="text" id="storeName" value="THE VICTOR BIKES">
+            </div>
+            <div class="form-group">
+              <label for="storeEmail">Store Email</label>
+              <input type="email" id="storeEmail" value="info@victorbikes.com">
+            </div>
+            <div class="form-group">
+              <label for="storePhone">Store Phone</label>
+              <input type="tel" id="storePhone" value="0806 246 3468">
+            </div>
+            <div class="form-group">
+              <label for="storeAddress">Store Address</label>
+              <textarea id="storeAddress" rows="3">Palm City St, Abuja 900108, Federal Capital Territory</textarea>
+            </div>
+            <div class="form-group">
+              <label for="storeCurrency">Currency</label>
+              <select id="storeCurrency">
+                <option value="NGN" selected>Nigerian Naira (₦)</option>
+                <option value="USD">US Dollar ($)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Payment Settings -->
+        <div id="payment" class="settings-tab">
+          <div class="settings-form">
+            <h3>Flutterwave Payment Gateway</h3>
+            <div class="form-group">
+              <label for="flutterwavePublicKey">Public Key</label>
+              <input type="password" id="flutterwavePublicKey" placeholder="Enter Flutterwave Public Key">
+            </div>
+            <div class="form-group">
+              <label for="flutterwaveSecretKey">Secret Key</label>
+              <input type="password" id="flutterwaveSecretKey" placeholder="Enter Flutterwave Secret Key">
+            </div>
+            <div class="form-group">
+              <label for="encryptionKey">Encryption Key</label>
+              <input type="password" id="encryptionKey" placeholder="Enter Encryption Key">
+            </div>
+            
+            <h3>Bank Transfer Settings</h3>
+            <div class="form-group">
+              <label for="bankName">Bank Name</label>
+              <input type="text" id="bankName" value="Opay">
+            </div>
+            <div class="form-group">
+              <label for="accountName">Account Name</label>
+              <input type="text" id="accountName" value="Victor Ejike">
+            </div>
+            <div class="form-group">
+              <label for="accountNumber">Account Number</label>
+              <input type="text" id="accountNumber" value="8062463468">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Email Settings -->
+        <div id="email" class="settings-tab">
+          <div class="settings-form">
+            <div class="form-group">
+              <label for="smtpHost">SMTP Host</label>
+              <input type="text" id="smtpHost" placeholder="smtp.gmail.com">
+            </div>
+            <div class="form-group">
+              <label for="smtpPort">SMTP Port</label>
+              <input type="number" id="smtpPort" value="587">
+            </div>
+            <div class="form-group">
+              <label for="smtpUsername">SMTP Username</label>
+              <input type="text" id="smtpUsername" placeholder="your-email@gmail.com">
+            </div>
+            <div class="form-group">
+              <label for="smtpPassword">SMTP Password</label>
+              <input type="password" id="smtpPassword" placeholder="Your email password">
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="enableSSL" checked> Enable SSL
+              </label>
+            </div>
+            <button class="btn btn-secondary" onclick="admin.testEmail()">
+              <i class="fas fa-paper-plane"></i> Test Email Configuration
+            </button>
+          </div>
+        </div>
+        
+        <!-- Security Settings -->
+        <div id="security" class="settings-tab">
+          <div class="settings-form">
+            <h3>Admin Security</h3>
+            <div class="form-group">
+              <label for="adminUsername">Admin Username</label>
+              <input type="text" id="adminUsername" value="victor">
+            </div>
+            <div class="form-group">
+              <label for="adminPassword">New Password</label>
+              <input type="password" id="adminPassword" placeholder="Leave blank to keep current">
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" id="confirmPassword">
+            </div>
+            
+            <h3>Security Options</h3>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="enable2FA" checked> Enable Two-Factor Authentication
+              </label>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="enableCaptcha"> Enable CAPTCHA on Login
+              </label>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="autoLogout" checked> Auto Logout after 30 minutes
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Backup Settings -->
+        <div id="backup" class="settings-tab">
+          <div class="settings-form">
+            <h3>Data Backup</h3>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="autoBackup" checked> Enable Automatic Backup
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="backupFrequency">Backup Frequency</label>
+              <select id="backupFrequency">
+                <option value="daily">Daily</option>
+                <option value="weekly" selected>Weekly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="backupRetention">Retention Period</label>
+              <select id="backupRetention">
+                <option value="7">7 days</option>
+                <option value="30" selected>30 days</option>
+                <option value="90">90 days</option>
+                <option value="365">1 year</option>
+              </select>
+            </div>
+            
+            <div class="backup-actions">
+              <button class="btn btn-primary" onclick="admin.createBackup()">
+                <i class="fas fa-database"></i> Create Backup Now
+              </button>
+              <button class="btn btn-secondary" onclick="admin.restoreBackup()">
+                <i class="fas fa-undo"></i> Restore from Backup
+              </button>
+            </div>
+            
+            <div class="backup-list">
+              <h4>Recent Backups</h4>
+              <div id="backupList">
+                <!-- Backups will be listed here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Add Product Modal -->
+  <div class="modal" id="addProductModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add New Product</h3>
+        <button class="modal-close" onclick="admin.closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="productForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="productName">Product Name *</label>
+              <input type="text" id="productName" required>
+            </div>
+            <div class="form-group">
+              <label for="productCategory">Category *</label>
+              <select id="productCategory" required>
+                <option value="">Select Category</option>
+                <option value="bikes">Bikes</option>
+                <option value="electric">Electric Vehicles</option>
+                <option value="parts">Parts</option>
+                <option value="accessories">Accessories</option>
+                <option value="services">Services</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="productDescription">Description *</label>
+            <textarea id="productDescription" rows="3" required></textarea>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="productPrice">Price (₦) *</label>
+              <input type="number" id="productPrice" required min="0" step="100">
+            </div>
+            <div class="form-group">
+              <label for="productStock">Stock Quantity *</label>
+              <input type="number" id="productStock" required min="0">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="productImage">Image URL</label>
+            <input type="url" id="productImage" placeholder="https://example.com/image.jpg">
+          </div>
+          
+          <div class="form-group">
+            <label for="productFeatures">Features (one per line)</label>
+            <textarea id="productFeatures" rows="3" placeholder="Feature 1&#10;Feature 2&#10;Feature 3"></textarea>
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Product</button>
+            <button type="button" class="btn btn-secondary" onclick="admin.closeModal()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Product Modal -->
+  <div class="modal" id="editProductModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Edit Product</h3>
+        <button class="modal-close" onclick="admin.closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Edit form will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- View Message Modal -->
+  <div class="modal" id="viewMessageModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Message Details</h3>
+        <button class="modal-close" onclick="admin.closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Message details will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Link Modal -->
+  <div class="modal" id="paymentLinkModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Generate Payment Link</h3>
+        <button class="modal-close" onclick="admin.closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="paymentLinkForm">
+          <div class="form-group">
+            <label for="linkAmount">Amount (₦) *</label>
+            <input type="number" id="linkAmount" required min="100" step="100">
+          </div>
+          <div class="form-group">
+            <label for="linkCustomer">Customer Email</label>
+            <input type="email" id="linkCustomer" placeholder="customer@example.com">
+          </div>
+          <div class="form-group">
+            <label for="linkDescription">Description</label>
+            <input type="text" id="linkDescription" placeholder="Payment for...">
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Generate Link</button>
+          </div>
+        </form>
+        <div id="generatedLink" class="generated-link" style="display: none;">
+          <h4>Payment Link Generated</h4>
+          <div class="link-display">
+            <input type="text" id="paymentLink" readonly>
+            <button class="copy-btn" onclick="admin.copyPaymentLink()">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          <a href="#" target="_blank" class="btn btn-primary" id="openPaymentLink">
+            <i class="fas fa-external-link-alt"></i> Open Payment Link
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal (for unauthorized access) -->
+  <div class="modal" id="adminLoginModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Admin Login</h3>
+      </div>
+      <div class="modal-body">
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label for="adminUsername">Username</label>
+            <input type="text" id="adminUsername" required>
+          </div>
+          <div class="form-group">
+            <label for="adminPassword">Password</label>
+            <input type="password" id="adminPassword" required>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Files -->
+  <script src="js/utils.js"></script>
+  <script src="js/admin.js"></script>
+  <!-- Flutterwave Payment -->
+  <script src="https://checkout.flutterwave.com/v3.js"></script>
+</body>
+</html>

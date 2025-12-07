@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE VICTOR BIKES — My Account</title>
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">VB</div>
+        <div class="logo-text">
+          <h1>THE VICTOR BIKES</h1>
+          <span>My Account</span>
+        </div>
+      </a>
+      
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-secondary">
+          <i class="fas fa-store"></i> Back to Store
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard -->
+  <main class="dashboard">
+    <div class="container">
+      <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+          <div class="user-profile">
+            <div class="profile-avatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="profile-info">
+              <h3 id="userName">Loading...</h3>
+              <p id="userEmail">Loading...</p>
+              <p class="member-since" id="memberSince"></p>
+            </div>
+          </div>
+
+          <nav class="dashboard-nav">
+            <a href="#profile" class="nav-item active">
+              <i class="fas fa-user"></i> My Profile
+            </a>
+            <a href="#orders" class="nav-item">
+              <i class="fas fa-shopping-bag"></i> My Orders
+            </a>
+            <a href="#bookings" class="nav-item">
+              <i class="fas fa-calendar-alt"></i> Service Bookings
+            </a>
+            <a href="#addresses" class="nav-item">
+              <i class="fas fa-map-marker-alt"></i> Addresses
+            </a>
+            <a href="#settings" class="nav-item">
+              <i class="fas fa-cog"></i> Settings
+            </a>
+            <button id="logoutBtn" class="nav-item logout">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+          </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="dashboard-content">
+          <!-- Profile Section -->
+          <section id="profile" class="dashboard-section active">
+            <div class="section-header">
+              <h2>My Profile</h2>
+              <button class="btn btn-primary" id="editProfileBtn">
+                <i class="fas fa-edit"></i> Edit Profile
+              </button>
+            </div>
+
+            <div class="profile-card">
+              <div class="profile-details">
+                <div class="detail-item">
+                  <label>Full Name</label>
+                  <p id="profileName">Loading...</p>
+                </div>
+                <div class="detail-item">
+                  <label>Email Address</label>
+                  <p id="profileEmail">Loading...</p>
+                </div>
+                <div class="detail-item">
+                  <label>Phone Number</label>
+                  <p id="profilePhone">Loading...</p>
+                </div>
+                <div class="detail-item">
+                  <label>Member Since</label>
+                  <p id="profileSince">Loading...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Edit Profile Form (Hidden by default) -->
+            <div class="edit-profile-form" id="editProfileForm" style="display: none;">
+              <h3>Edit Profile</h3>
+              <form id="profileForm">
+                <div class="form-group">
+                  <label for="editName">Full Name</label>
+                  <input type="text" id="editName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label for="editPhone">Phone Number</label>
+                  <input type="tel" id="editPhone" class="form-input" required>
+                </div>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                  <button type="button" class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </section>
+
+          <!-- Orders Section -->
+          <section id="orders" class="dashboard-section">
+            <div class="section-header">
+              <h2>My Orders</h2>
+              <a href="index.html#products" class="btn btn-primary">
+                <i class="fas fa-shopping-cart"></i> Shop Now
+              </a>
+            </div>
+
+            <div class="orders-list" id="userOrders">
+              <!-- Orders will be loaded by JavaScript -->
+              <div class="loading-state">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading orders...</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Bookings Section -->
+          <section id="bookings" class="dashboard-section">
+            <div class="section-header">
+              <h2>Service Bookings</h2>
+              <a href="index.html#services" class="btn btn-primary">
+                <i class="fas fa-calendar-plus"></i> Book Service
+              </a>
+            </div>
+
+            <div class="bookings-list" id="userBookings">
+              <!-- Bookings will be loaded by JavaScript -->
+              <div class="loading-state">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading bookings...</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Addresses Section -->
+          <section id="addresses" class="dashboard-section">
+            <div class="section-header">
+              <h2>My Addresses</h2>
+              <button class="btn btn-primary" id="addAddressBtn">
+                <i class="fas fa-plus"></i> Add Address
+              </button>
+            </div>
+
+            <div class="addresses-list" id="userAddresses">
+              <!-- Addresses will be loaded by JavaScript -->
+              <div class="empty-state">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>No addresses saved</h3>
+                <p>Add your delivery addresses for faster checkout</p>
+              </div>
+            </div>
+
+            <!-- Add Address Form (Hidden by default) -->
+            <div class="add-address-form" id="addAddressForm" style="display: none;">
+              <h3>Add New Address</h3>
+              <form id="addressForm">
+                <div class="form-group">
+                  <label for="addressLabel">Address Label</label>
+                  <input type="text" id="addressLabel" class="form-input" placeholder="Home, Work, etc." required>
+                </div>
+                <div class="form-group">
+                  <label for="addressStreet">Street Address</label>
+                  <textarea id="addressStreet" class="form-input" rows="3" required></textarea>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="addressCity">City</label>
+                    <input type="text" id="addressCity" class="form-input" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="addressState">State</label>
+                    <input type="text" id="addressState" class="form-input" required>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary">Save Address</button>
+                  <button type="button" class="btn btn-secondary" id="cancelAddressBtn">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </section>
+
+          <!-- Settings Section -->
+          <section id="settings" class="dashboard-section">
+            <div class="section-header">
+              <h2>Account Settings</h2>
+            </div>
+
+            <div class="settings-card">
+              <div class="setting-item">
+                <div class="setting-info">
+                  <h4>Change Password</h4>
+                  <p>Update your account password</p>
+                </div>
+                <button class="btn btn-secondary" id="changePasswordBtn">
+                  Change Password
+                </button>
+              </div>
+
+              <div class="setting-item">
+                <div class="setting-info">
+                  <h4>Notification Preferences</h4>
+                  <p>Manage email and SMS notifications</p>
+                </div>
+                <button class="btn btn-secondary" id="notificationBtn">
+                  Manage
+                </button>
+              </div>
+
+              <div class="setting-item">
+                <div class="setting-info">
+                  <h4>Privacy Settings</h4>
+                  <p>Control your privacy and data</p>
+                </div>
+                <button class="btn btn-secondary" id="privacyBtn">
+                  Manage
+                </button>
+              </div>
+
+              <div class="setting-item danger">
+                <div class="setting-info">
+                  <h4>Delete Account</h4>
+                  <p>Permanently delete your account and data</p>
+                </div>
+                <button class="btn btn-danger" id="deleteAccountBtn">
+                  Delete Account
+                </button>
+              </div>
+            </div>
+
+            <!-- Change Password Form (Hidden by default) -->
+            <div class="change-password-form" id="changePasswordForm" style="display: none;">
+              <h3>Change Password</h3>
+              <form id="passwordForm">
+                <div class="form-group">
+                  <label for="currentPassword">Current Password</label>
+                  <input type="password" id="currentPassword" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label for="newPassword">New Password</label>
+                  <input type="password" id="newPassword" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label for="confirmPassword">Confirm New Password</label>
+                  <input type="password" id="confirmPassword" class="form-input" required>
+                </div>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary">Update Password</button>
+                  <button type="button" class="btn btn-secondary" id="cancelPasswordBtn">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2024 THE VICTOR BIKES. All rights reserved.</p>
+        <p><a href="index.html">← Back to store</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript Files -->
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
